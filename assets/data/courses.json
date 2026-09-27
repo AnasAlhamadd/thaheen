@@ -1,0 +1,105 @@
+{
+  "courses": [
+    {
+      "id": "anatomy-101",
+      "title": "مقدمة في التشريح",
+      "titleEn": "Introduction to Anatomy",
+      "description": "استكشاف البنية النسيجية والهيكلية لمنظومة العظام في جسم الإنسان، مع التركيز على التعظم الغشائي والداخل الغضروفي، وتكوين النخاع ووظائف الدعم الميكانيكي والحماية الحيوية.",
+      "descriptionEn": "Exploring the histological and structural anatomy of the skeletal system in the human body, focusing on intramembranous and endochondral ossification, bone marrow formation, and the functions of mechanical support and biological protection.",
+      "instructor": "د. سارة",
+      "instructorEn": "Dr. Sarah",
+      "thumbnail": "assets/images/anatomy.png",
+      "sections": [
+        {
+          "id": "anatomy-s1",
+          "title": "الجهاز الهيكلي",
+          "titleEn": "Skeletal System",
+          "lessons": [
+            {
+              "id": "anatomy-l1",
+              "title": "العظام",
+              "titleEn": "Bones",
+              "durationSec": 95,
+              "video": "assets/videos/lesson1.mp4"
+            },
+            {
+              "id": "anatomy-l2",
+              "title": "المفاصل",
+              "titleEn": "Joints",
+              "durationSec": 100,
+              "video": "assets/videos/lesson2.mp4"
+            }
+          ]
+        },
+        {
+          "id": "anatomy-s2",
+          "title": "الجهاز العضلي",
+          "titleEn": "Muscular System",
+          "lessons": [
+            {
+              "id": "anatomy-l3",
+              "title": "العضلات الرئيسية",
+              "titleEn": "Major Muscles",
+              "durationSec": 90,
+              "video": "assets/videos/lesson3.mp4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "physiology-101",
+      "title": "علم وظائف الأعضاء",
+      "titleEn": "Physiology",
+      "description": "دراسة شاملة لوظائف أعضاء الجسم البشري وآليات عملها، مع التركيز على الأنظمة العصبية والقلبية والاتزان الداخلي للجسم.",
+      "descriptionEn": "Comprehensive study of human body organ functions and their mechanisms, focusing on nervous and cardiovascular systems and body homeostasis.",
+      "instructor": "د. أحمد",
+      "instructorEn": "Dr. Ahmed",
+      "thumbnail": "assets/images/physiology.png",
+      "sections": [
+        {
+          "id": "physio-s1",
+          "title": "مقدمة وفيزيولوجيا الخلية",
+          "titleEn": "Introduction & Cell Physiology",
+          "lessons": [
+            {
+              "id": "physio-l1",
+              "title": "الخلايا والأغشية",
+              "titleEn": "Cells & Membranes",
+              "durationSec": 80,
+              "video": "assets/videos/lesson1.mp4"
+            },
+            {
+              "id": "physio-l2",
+              "title": "الأنسجة والاتزان الداخلي",
+              "titleEn": "Tissues & Homeostasis",
+              "durationSec": 70,
+              "video": "assets/videos/lesson2.mp4"
+            }
+          ]
+        },
+        {
+          "id": "physio-s2",
+          "title": "الجهاز العصبي والقلبي",
+          "titleEn": "Nervous & Cardiovascular System",
+          "lessons": [
+            {
+              "id": "physio-l3",
+              "title": "الإشارات العصبية",
+              "titleEn": "Neural Signals",
+              "durationSec": 85,
+              "video": "assets/videos/lesson3.mp4"
+            },
+            {
+              "id": "physio-l4",
+              "title": "الدورة الدموية",
+              "titleEn": "Blood Circulation",
+              "durationSec": 90,
+              "video": "assets/videos/lesson5.mp4"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

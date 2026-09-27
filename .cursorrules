@@ -1,0 +1,316 @@
+# Cursor Rules for Flutter E-Commerce Project (Sharks)
+
+## Project Overview
+This is a Flutter e-commerce application built with Clean Architecture, following feature-based development with BLoC/Cubit state management.
+
+## Architecture
+
+### Clean Architecture Layers
+- **Data Layer**: `data/` folder containing:
+  - `datasource/` - Remote and local data sources
+  - `model/` - Data models (JSON serialization)
+  - `repositories/` - Repository implementations
+  
+- **Domain Layer**: `domain/` folder containing:
+  - `entities/` - Business entities (pure Dart classes)
+  - `repositories/` - Repository interfaces/abstract classes
+  - `usecases/` - Business logic use cases
+  
+- **Presentation Layer**: `presentation/` folder containing:
+  - `bloc/` or `cubit/` - State management (BLoC/Cubit)
+  - `pages/` or `page/` - Screen widgets
+  - `widget/` - Feature-specific widgets
+
+### Feature Structure
+Each feature follows this structure:
+```
+feature/
+  ├── feature_name/
+      ├── data/
+      │   ├── datasource/
+      │   ├── model/
+      │   └── repositories/
+      ├── domain/
+      │   ├── entities/
+      │   ├── repositories/
+      │   └── usecases/
+      └── presentation/
+          ├── bloc/ or cubit/
+          ├── pages/ or page/
+          └── widget/
+```
+
+## Naming Conventions
+
+### Files and Folders
+- Feature folders: `snake_case` (e.g., `auth`, `checkout`, `voice_order`)
+- BLoC/Cubit files: `*_cubit.dart` or `*_bloc.dart` (e.g., `login_cubit.dart`)
+- State files: `*_state.dart` (e.g., `login_state.dart`)
+- Screen files: `*_screen.dart` or `*_page.dart` (e.g., `login_screen.dart`)
+- Widget files: `*_widget.dart` or descriptive names (e.g., `custom_textform_login.dart`)
+- Data source files: `*_data_source.dart` (e.g., `login_remote_data_source.dart`)
+- Repository files: `*_repository.dart` or `*_repo.dart`
+- Use case files: `*_usecase.dart` or `*_use_case.dart`
+- Entity files: `*_entity.dart` or `*_entities.dart`
+- Model files: `*_model.dart`
+
+### Classes
+- BLoC/Cubit classes: `PascalCase` ending with `Cubit` or `Bloc` (e.g., `LoginCubit`)
+- State classes: `PascalCase` ending with `State` (e.g., `LoginState`)
+- Entity classes: `PascalCase` ending with `Entity` (e.g., `LoginEntity`)
+- Model classes: `PascalCase` ending with `Model` (e.g., `LoginModel`)
+- Use case classes: `PascalCase` with descriptive name + `UseCase` (e.g., `LoginUseCase`)
+- Repository classes: `PascalCase` ending with `Repository` or `Repo` (e.g., `LoginRepository`)
+- Data source classes: `PascalCase` ending with `DataSource` (e.g., `LoginRemoteDataSource`)
+
+### Variables and Methods
+- Use `camelCase` for variables, methods, and parameters
+- Private members prefixed with `_` (e.g., `_privateVariable`)
+- Constants use `camelCase` in classes, `SCREAMING_SNAKE_CASE` for top-level constants
+
+## State Management
+
+### BLoC/Cubit Pattern
+- Use `flutter_bloc` package
+- Prefer `Cubit` for simpler state management
+- Use `Bloc` when complex event handling is needed
+- Each feature should have its own cubit/bloc in `presentation/bloc/` or `presentation/cubit/`
+
+### State Classes
+- Extend `Equatable` for value comparison
+- Create separate state files when states are complex
+- States should be immutable
+- Use `copyWith` methods for updating states
+
+Example:
+```dart
+class LoginState extends Equatable {
+  final bool isLoading;
+  final String? error;
+  
+  const LoginState({this.isLoading = false, this.error});
+  
+  LoginState copyWith({bool? isLoading, String? error}) {
+    return LoginState(
+      isLoading: isLoading ?? this.isLoading,
+      error: error,
+    );
+  }
+  
+  @override
+  List<Object?> get props => [isLoading, error];
+}
+```
+
+## Dependency Injection
+
+### GetIt Setup
+- All dependencies registered in `injection_container.dart`
+- Use `registerLazySingleton` for repositories, data sources, and use cases
+- Use `registerFactory` for BLoC/Cubit instances
+- Use `registerLazySingleton` for shared resources (network, storage)
+
+### Registration Order
+1. Core dependencies (NetworkInfo, InternetConnectionChecker)
+2. Data sources
+3. Repositories
+4. Use cases
+5. BLoC/Cubit instances
+
+## Navigation
+
+### GoRouter
+- All routes defined in `core/constant/app_router.dart`
+- Use `customTransitionPage` helper for page transitions
+- Route paths defined as static constants in `AppRouter` class
+- Pass data via `state.extra` when navigating
+
+## Error Handling
+
+### Either Pattern (Dartz)
+- Use `Either<Failure, T>` for operations that can fail
+- Create custom `Failure` classes extending `Failure` base class
+- Map failures to user-friendly messages in presentation layer
+
+Example:
+```dart
+Future<Either<Failure, UserEntity>> login(String email, String password);
+```
+
+## Network Layer
+
+### Dio Configuration
+- Use Dio for HTTP requests (configured in core/network)
+- Include `NetworkInfo` check before making requests
+- Handle connectivity issues gracefully
+- Use interceptors for authentication tokens
+
+### API Reference Project
+**IMPORTANT**: When handling API requests, responses, or any API-related implementation:
+- **ALWAYS** check the Laravel backend project at `/Users/medicus/Desktop/Laravel/qtrhorse` first
+- Reference the Laravel API to understand:
+  - Request body structure (parameters, format, validation rules)
+  - Response body format (data structure, error format, success format)
+  - HTTP headers (authentication headers, content-type, custom headers)
+  - Endpoint paths and HTTP methods (GET, POST, PUT, DELETE, PATCH)
+  - Status codes and their meanings
+  - Error response formats
+  - Authentication/authorization requirements
+- When implementing API calls in Flutter:
+  1. First search/examine the corresponding Laravel controller, route, or API documentation
+  2. Match the request format (body, headers, query parameters) exactly as expected by the backend
+  3. Map the response structure to Flutter models/entities
+  4. Handle errors according to the backend's error response format
+- Look for Laravel files in these locations:
+  - Routes: `routes/api.php` or route files in `routes/`
+  - Controllers: `app/Http/Controllers/`
+  - Requests/Validation: `app/Http/Requests/`
+  - Resources/Transformers: `app/Http/Resources/`
+  - Models: `app/Models/`
+
+## Localization
+
+### Easy Localization
+- Translation files in `assets/translations/`
+- Supported locales: `ar`, `en`, `fr`, `de`, `nl`
+- Fallback locale: `nl`
+- Use `.tr()` extension for translations
+- Access context locale via `context.locale`
+
+## Styling and Theming
+
+### ScreenUtil
+- Use `ScreenUtil` for responsive design
+- Design size: `Size(360, 800)`
+- Use `.w`, `.h`, `.sp`, `.r` extensions for responsive values
+
+### Theme
+- Light and dark theme support
+- Theme configuration in `core/app_theme.dart`
+- Use theme colors from `core/constant/colors_app.dart`
+
+## Code Style
+
+### Imports
+- Group imports: Flutter SDK → Packages → Project
+- Use relative imports for project files
+- Sort imports alphabetically within groups
+
+### Documentation
+- Document public APIs and complex logic
+- Use Dart doc comments (`///`) for classes and public methods
+
+### Constants
+- Store app constants in `core/constant/`
+- Use descriptive constant names
+- Group related constants in the same file
+
+## Testing Strategy
+
+### Unit Tests
+- Test use cases and business logic
+- Mock repositories and data sources
+- Test error cases and success cases
+
+### Widget Tests
+- Test individual widgets and screens
+- Use `flutter_test` package
+- Mock BLoC/Cubit instances
+
+## Best Practices
+
+### Repository Pattern
+- Always check `NetworkInfo` before remote operations
+- Return cached data when offline (when applicable)
+- Throw exceptions that are caught and converted to `Failure`
+
+### Use Cases
+- Each use case should have a single responsibility
+- Use cases contain pure business logic
+- Accept repository interfaces, not implementations
+
+### BLoC/Cubit
+- Keep business logic in use cases, not in BLoC/Cubit
+- BLoC/Cubit should only handle state management
+- Emit new states instead of modifying existing ones
+
+### Widgets
+- Break down large widgets into smaller reusable widgets
+- Use `const` constructors whenever possible
+- Keep widgets focused and single-purpose
+- Place feature-specific widgets in `presentation/widget/`
+
+### Storage
+- Use `StorageHandler` from `core/storage/` for local storage
+- Store sensitive data securely
+- Cache frequently accessed data
+
+## Assets
+
+### Organization
+- Images: `assets/images/`
+- SVG: `assets/svg/`
+- Lottie animations: `assets/lotties/`
+- Fonts: `assets/fonts/`
+- Translations: `assets/translations/`
+
+### Usage
+- Reference assets using path strings or constants
+- Use `ImagePath` constants from `core/constant/image_path.dart` when available
+
+## Firebase Integration
+
+### Services
+- Firebase Core for initialization
+- Firebase Messaging for push notifications
+- Background message handler: `_firebaseMessagingBackgroundHandler`
+- Local notifications for foreground messages
+
+## Code Quality
+
+### Linting
+- Follow `flutter_lints` rules
+- Maximum cyclomatic complexity: 10
+- Maximum lines of code per function: 200
+- Maximum nesting level: 5
+- Prefer trailing commas
+
+### Performance
+- Use `const` constructors extensively
+- Avoid unnecessary rebuilds
+- Use `ListView.builder` for long lists
+- Implement proper image caching
+
+## Common Patterns
+
+### Loading States
+```dart
+if (state.isLoading) {
+  return LoadingWidget();
+} else if (state.error != null) {
+  return ErrorWidget(message: state.error);
+} else {
+  return ContentWidget(data: state.data);
+}
+```
+
+### Form Validation
+- Validate input on submission
+- Show error messages below form fields
+- Disable submit button when form is invalid
+
+### Error Display
+- Show user-friendly error messages
+- Use `showSnackBar` from `core/function/show_snack_bar.dart`
+- Map technical errors to readable messages
+
+## Important Notes
+
+- Always register new features in `injection_container.dart`
+- Update routes in `app_router.dart` when adding new screens
+- Follow the existing folder structure for new features
+- Use the same naming conventions as existing code
+- Keep features self-contained and independent
+- Share common code through `core/` directory
+- Use `Equatable` for state and entity classes
+- Implement proper error handling at all layers
