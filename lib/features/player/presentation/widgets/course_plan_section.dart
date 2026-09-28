@@ -268,7 +268,7 @@ class _LessonTile extends StatelessWidget {
   String _formatDuration(int sec) {
     final m = sec ~/ 60;
     final s = sec % 60;
-    return '${m.toString().padLeft(2, '0')}:${s.toString().padLeft(2, '0')} د (${sec}ث)';
+    return '${m.toString().padLeft(2, '0')}:${s.toString().padLeft(2, '0')} د ($sec ث)';
   }
 
   @override

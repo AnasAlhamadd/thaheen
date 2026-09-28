@@ -8,6 +8,8 @@
       "descriptionEn": "Exploring the histological and structural anatomy of the skeletal system in the human body, focusing on intramembranous and endochondral ossification, bone marrow formation, and the functions of mechanical support and biological protection.",
       "instructor": "د. سارة",
       "instructorEn": "Dr. Sarah",
+      "courseCode": "ANAT 201",
+      "semester": "semester_year_2_sem_1",
       "thumbnail": "assets/images/anatomy.png",
       "sections": [
         {
@@ -55,6 +57,8 @@
       "descriptionEn": "Comprehensive study of human body organ functions and their mechanisms, focusing on nervous and cardiovascular systems and body homeostasis.",
       "instructor": "د. أحمد",
       "instructorEn": "Dr. Ahmed",
+      "courseCode": "PHYS 201",
+      "semester": "semester_year_2_sem_2",
       "thumbnail": "assets/images/physiology.png",
       "sections": [
         {

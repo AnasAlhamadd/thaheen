@@ -134,8 +134,8 @@ class _CourseCardShimmerState extends State<CourseCardShimmer>
                         colors: [
                           Colors.transparent,
                           isDark
-                              ? Colors.white.withOpacity(0.05)
-                              : Colors.white.withOpacity(0.3),
+                              ? Colors.white.withValues(alpha: 0.05)
+                              : Colors.white.withValues(alpha: 0.3),
                           Colors.transparent,
                         ],
                         stops: [
@@ -180,8 +180,8 @@ class _ShimmerBox extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         color: isDark 
-            ? AppColors.darkBorder.withOpacity(0.5)
-            : AppColors.lightBorder.withOpacity(0.8),
+            ? AppColors.darkBorder.withValues(alpha: 0.5)
+            : AppColors.lightBorder.withValues(alpha: 0.8),
         borderRadius: BorderRadius.circular(borderRadius),
       ),
     );

@@ -14,6 +14,8 @@ class CourseModel extends Course {
     super.descriptionEn,
     required super.instructor,
     super.instructorEn,
+    super.courseCode,
+    super.semester,
     required super.thumbnail,
     required super.sections,
   });
@@ -29,6 +31,8 @@ class CourseModel extends Course {
         descriptionEn: '',
         instructor: '',
         instructorEn: '',
+        courseCode: '',
+        semester: '',
         thumbnail: '',
         sections: [],
       );
@@ -53,6 +57,8 @@ class CourseModel extends Course {
       descriptionEn: (json['descriptionEn'] as String?) ?? '',
       instructor: (json['instructor'] as String?) ?? '',
       instructorEn: (json['instructorEn'] as String?) ?? '',
+      courseCode: (json['courseCode'] as String?) ?? '',
+      semester: (json['semester'] as String?) ?? '',
       thumbnail: (json['thumbnail'] as String?) ?? '',
       sections: parsedSections,
     );
@@ -68,6 +74,8 @@ class CourseModel extends Course {
       'descriptionEn': descriptionEn,
       'instructor': instructor,
       'instructorEn': instructorEn,
+      'courseCode': courseCode,
+      'semester': semester,
       'thumbnail': thumbnail,
       'sections': sections.map((s) => (s as SectionModel).toJson()).toList(),
     };

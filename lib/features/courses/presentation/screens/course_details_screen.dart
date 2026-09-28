@@ -72,11 +72,9 @@ class _CourseDetailsViewState extends State<_CourseDetailsView> {
 
         return GradientScaffold(
           appBar: CourseDetailsTopBar(
-            title: loaded == null
-                ? null
-                : loaded.course.localizedTitle(
-                    context.read<SettingsCubit>().state.language.languageCode,
-                  ),
+            title: loaded?.course.localizedTitle(
+                  context.read<SettingsCubit>().state.language.languageCode,
+                ),
             isBookmarked: _bookmarked,
             onBack: () {
               if (context.canPop()) {
@@ -209,8 +207,9 @@ class _LoadedCourseBody extends StatelessWidget {
     return CustomScrollView(
       physics: const AlwaysScrollableScrollPhysics(),
       slivers: [
+        SliverToBoxAdapter(child: SizedBox(height: 12,),) ,
         SliverPadding(
-          padding: const EdgeInsets.fromLTRB(16, 14, 16, 24),
+          padding: const EdgeInsets.symmetric(horizontal: 6) ,
           sliver: SliverList(
             delegate: SliverChildListDelegate([
               CourseHeroHeaderCard(

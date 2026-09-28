@@ -33,19 +33,17 @@ class CourseHeroHeaderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final isAnatomy = course.id.contains('anat') || course.title.contains('تشريح');
-    final courseCode = isAnatomy ? 'ANAT 201' : 'PHYS 201';
 
     return BlocBuilder<SettingsCubit, SettingsState>(
       buildWhen: (prev, curr) => prev.language != curr.language,
       builder: (context, state) {
         final langCode = state.language.languageCode;
-        final semesterTag = isAnatomy
-            ? AppStrings.tr('semester_year_2_sem_1', langCode)
-            : AppStrings.tr('semester_year_2_sem_2', langCode);
-        final descriptionKey = isAnatomy
-            ? 'course_anatomy_description'
-            : 'course_physiology_description';
+        // Use data from the course entity — no string-matching on ID or title.
+        final courseCode = course.courseCode;
+        final semesterTag = course.semester.isNotEmpty
+            ? AppStrings.tr(course.semester, langCode)
+            : '';
+        final courseDescription = course.localizedDescription(langCode);
 
         return Container(
           decoration: BoxDecoration(
@@ -134,8 +132,8 @@ class CourseHeroHeaderCard extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 8),
-                    AppCustomText(
-                      descriptionKey,
+                    Text(
+                      courseDescription,
                       style: TextStyle(
                         fontSize: 13,
                         height: 1.5,
@@ -264,7 +262,7 @@ class _HeroVideoBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 16 / 9,
+      aspectRatio: 1,
       child: Stack(
         fit: StackFit.expand,
         children: [

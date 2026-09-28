@@ -19,6 +19,12 @@ class Course extends Equatable {
   /// English instructor name — falls back to [instructor] if empty.
   final String instructorEn;
 
+  /// Academic course code (e.g. "ANAT 201").
+  final String courseCode;
+
+  /// Localisation key for the semester label (e.g. "semester_year_2_sem_1").
+  final String semester;
+
   final String thumbnail;
   final List<Section> sections;
 
@@ -30,6 +36,8 @@ class Course extends Equatable {
     this.descriptionEn = '',
     required this.instructor,
     this.instructorEn = '',
+    this.courseCode = '',
+    this.semester = '',
     required this.thumbnail,
     required this.sections,
   });
@@ -68,6 +76,8 @@ class Course extends Equatable {
         descriptionEn,
         instructor,
         instructorEn,
+        courseCode,
+        semester,
         thumbnail,
         sections,
       ];

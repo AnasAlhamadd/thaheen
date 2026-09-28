@@ -32,9 +32,9 @@ class ThaheenAppBar extends StatelessWidget implements PreferredSizeWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final textColor = isDark ? AppColors.darkTextPrimary : Colors.white;
-    final containerColor = isDark ? AppColors.darkSurface.withOpacity(0.8) : Colors.transparent;
-    final borderColor = isDark ? AppColors.darkBorder : Colors.white.withOpacity(0.3);
-    final shadowColor = isDark ? Colors.black.withOpacity(0.3) : Colors.black.withOpacity(0.1);
+    final containerColor = isDark ? AppColors.darkSurface.withValues(alpha: 0.8) : Colors.transparent;
+    final borderColor = isDark ? AppColors.darkBorder : Colors.white.withValues(alpha: 0.3);
+    final shadowColor = isDark ? Colors.black.withValues(alpha: 0.3) : Colors.black.withValues(alpha: 0.1);
 
     return SafeArea(
       child: Container(
@@ -98,7 +98,7 @@ class ThaheenAppBar extends StatelessWidget implements PreferredSizeWidget {
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
-                      color: textColor.withOpacity(0.9),
+                      color: textColor.withValues(alpha: 0.9),
                     ),
                   ),
                   const SizedBox(height: 2),

@@ -12,7 +12,6 @@ import '../cubit/lesson_player_cubit.dart';
 import '../cubit/lesson_player_state.dart';
 import '../widgets/course_plan_section.dart';
 import '../widgets/lesson_info_card.dart';
-import '../widgets/lesson_progress_indicator.dart';
 import '../widgets/video_player_surface.dart';
 
 /// Screen wrapping the BlocProvider for the lesson player.
@@ -563,10 +562,13 @@ class _LessonPlayerViewState extends State<_LessonPlayerView> {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
+    // Resolve language code for localized strings.
+    final langCode = Localizations.localeOf(context).languageCode;
+
     String currentSectionTitle = '';
     for (final section in state.course.sections) {
       if (section.lessons.any((l) => l.id == state.currentLesson.id)) {
-        currentSectionTitle = section.title;
+        currentSectionTitle = section.localizedTitle(langCode);
         break;
       }
     }
@@ -576,14 +578,13 @@ class _LessonPlayerViewState extends State<_LessonPlayerView> {
 
     children.add(
       LessonInfoCard(
-        lessonTitle: state.currentLesson.title,
+        lessonTitle: state.currentLesson.localizedTitle(langCode),
         sectionTitle: currentSectionTitle,
-        instructorName: state.course.instructor,
+        instructorName: state.course.localizedInstructor(langCode),
         durationSec: state.currentLesson.durationSec,
-        description:
-            'استكشاف البنية النسيجية والهيكلية لمنظومة العظام في جسم الإنسان، '
-            'مع التركيز على التعظم الغشائي والداخل الغضروفي، وتكوين النخاع '
-            'ووظائف الدعم الميكانيكي والحماية الحيوية ضمن مقرر ${state.course.title}.',
+        description: state.course.localizedDescription(langCode).isNotEmpty
+            ? state.course.localizedDescription(langCode)
+            : null,
       ),
     );
 
@@ -911,41 +912,6 @@ class _LessonPlayerViewState extends State<_LessonPlayerView> {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-/// Compact app bar icon button.
-class _AppBarIconButton extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback onTap;
-  final bool isDark;
-
-  const _AppBarIconButton({
-    required this.icon,
-    required this.onTap,
-    required this.isDark,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 40,
-        height: 40,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.transparent,
-        ),
-        child: Icon(
-          icon,
-          size: 22,
-          color: isDark
-              ? AppColors.darkTextSecondary
-              : AppColors.lightTextSecondary,
-        ),
       ),
     );
   }
